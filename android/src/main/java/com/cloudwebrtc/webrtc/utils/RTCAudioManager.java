@@ -404,12 +404,20 @@ public class RTCAudioManager {
 
   /** Sets the speaker phone mode. */
   public void setSpeakerphoneOn(boolean on) {
+    if (on) {
+      audioManager.requestAudioFocus(null, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN);
+      audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+    } else {
+      audioManager.abandonAudioFocus(null);
+      audioManager.setMode(AudioManager.MODE_NORMAL);
+    }
+
     boolean wasOn = audioManager.isSpeakerphoneOn();
     if (wasOn == on) {
       return;
     }
     final RTCBluetoothManager.State btManagerState = bluetoothManager.getState();
-    final boolean isBTAvailable =  
+    final boolean isBTAvailable =
     btManagerState == RTCBluetoothManager.State.SCO_CONNECTED
         || btManagerState == RTCBluetoothManager.State.SCO_CONNECTING
         || btManagerState == RTCBluetoothManager.State.HEADSET_AVAILABLE;
