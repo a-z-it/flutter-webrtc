@@ -179,11 +179,11 @@ public class RTCAudioManager {
     // Create and initialize the proximity sensor.
     // Tablet devices (e.g. Nexus 7) does not support proximity sensors.
     // Note that, the sensor will not be active until start() has been called.
-    proximitySensor = RTCProximitySensor.create(context,
+    // proximitySensor = RTCProximitySensor.create(context,
         // This method will be called each time a state change is detected.
         // Example: user holds his hand over the device (closer than ~5 cm),
         // or removes his hand from the device.
-        this ::onProximitySensorChangedState);
+        // this ::onProximitySensorChangedState);
 
     Log.d(TAG, "defaultAudioDevice: " + defaultAudioDevice);
     RTCUtils.logDeviceInfo(TAG);
