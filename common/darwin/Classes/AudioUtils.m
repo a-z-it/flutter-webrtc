@@ -17,6 +17,7 @@
   if (recording && session.category != AVAudioSessionCategoryPlayAndRecord &&
       session.category != AVAudioSessionCategoryMultiRoute) {
     config.category = AVAudioSessionCategoryPlayAndRecord;
+    config.mode = AVAudioSessionModeVoiceChat;
     config.categoryOptions = AVAudioSessionCategoryOptionDefaultToSpeaker |
         AVAudioSessionCategoryOptionAllowBluetooth |
         AVAudioSessionCategoryOptionAllowBluetoothA2DP;
@@ -26,9 +27,11 @@
     [session setMode:config.mode error:nil];
   } else if (!recording && (session.category == AVAudioSessionCategoryAmbient
       || session.category == AVAudioSessionCategorySoloAmbient)) {
-    config.category = AVAudioSessionCategoryPlayback;
-    config.categoryOptions = 0;
-
+    config.category = AVAudioSessionCategoryPlayAndRecord;
+    config.categoryOptions = AVAudioSessionCategoryOptionDefaultToSpeaker |
+        AVAudioSessionCategoryOptionAllowBluetooth |
+        AVAudioSessionCategoryOptionAllowBluetoothA2DP;
+    config.mode = AVAudioSessionModeVoiceChat;
     // upgrade from ambient if needed
     [session setCategory:config.category
       withOptions:config.categoryOptions
