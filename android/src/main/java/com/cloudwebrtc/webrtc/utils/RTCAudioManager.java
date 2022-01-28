@@ -404,13 +404,10 @@ public class RTCAudioManager {
 
   /** Sets the speaker phone mode. */
   public void setSpeakerphoneOn(boolean on) {
-    // if (on) {
-    //   audioManager.requestAudioFocus(null, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN);
-    //   audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-    // } else {
-    //   audioManager.abandonAudioFocus(null);
-    //   audioManager.setMode(AudioManager.MODE_NORMAL);
-    // }
+    if (on) {
+      audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+      audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+    }
 
     boolean wasOn = audioManager.isSpeakerphoneOn();
     if (wasOn == on) {
